@@ -2,6 +2,23 @@ const Header = ({ course }) => {
   return <h1>{course}</h1>;
 };
 
+const Content = ({ parts }) => {
+  return (
+    <div>
+      {parts.map((part, index) => (
+        <p key={index}>
+          {part.name} {part.exercises}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+const Total = ({ parts }) => {
+  const totalExercises = parts.reduce((sum, part) => sum + part.exercises, 0);
+  return <p>Total number of exercises: {totalExercises}</p>;
+};
+
 const App = () => {
   const course = "Half Stack application development";
   const parts = [
