@@ -12,19 +12,8 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
-  const vote = {
-    0: 0,
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-    6: 0,
-    7: 0,
-  };
-
   const [selected, setSelected] = useState(0);
-  const [votes, setVotes] = useState(vote);
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
   const selectRandom = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length);
@@ -33,18 +22,32 @@ const App = () => {
   };
 
   const updateVote = (selected) => {
-    const copy = { ...votes };
+    const copy = [...votes];
     copy[selected] += 1;
 
     setVotes(copy);
   };
 
+  const maxVote = Math.max(...votes);
+
+  const maxIndex = votes.indexOf(maxVote);
+
   return (
     <div>
+      <h1>Anectode of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button onClick={() => updateVote(selected)}>vote</button>
       <button onClick={() => selectRandom()}>next anectode</button>
+
+      <h1>Anectode with most votes</h1>
+      {maxVote > 0 ? (
+        <>
+          <p>{anecdotes[maxIndex]}</p>
+        </>
+      ) : (
+        <p>No votes yet</p>
+      )}
     </div>
   );
 };
